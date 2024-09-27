@@ -6,6 +6,6 @@ public class ToolType {
     }
 
     public static final String CHAINSAW = "Chainsaw";
-    public static final String LADDER = "ladder";
+    public static final String LADDER = "Ladder";
     public static final String JACKHAMMER = "Jackhammer";
 }

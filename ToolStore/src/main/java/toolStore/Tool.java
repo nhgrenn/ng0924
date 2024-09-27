@@ -61,7 +61,7 @@ public class Tool {
         return weekendCharge;
     }
 
-    public double getDailyCharge() {
+    public float getDailyCharge() {
         return dailyCharge;
     }
 
