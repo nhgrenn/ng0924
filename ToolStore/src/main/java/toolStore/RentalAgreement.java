@@ -18,9 +18,8 @@ public class RentalAgreement {
     private final LocalDate dueDate;
     private final int chargeDays;
     private final float preDiscountCharge;
-    private final float discountAmount;
     private final float finalCharge;
-    private BigDecimal roundedDiscountAmount;
+    private final float roundedDiscountAmount;
 
     public RentalAgreement(String toolCode, int rentalDayCount, int discount, String date) {
         tool = new Tool(toolCode);
@@ -38,10 +37,11 @@ public class RentalAgreement {
         dueDate = rentalPeriod[rentalDays-1];
         chargeDays = calculateChargeDays();
         preDiscountCharge = tool.getDailyCharge() * chargeDays;
-        discountAmount = preDiscountCharge * ((float) discountPercent / 100);
-        roundedDiscountAmount = new BigDecimal(Float.toString(discountAmount));
-        roundedDiscountAmount = roundedDiscountAmount.setScale(2, RoundingMode.HALF_UP);
-        finalCharge = preDiscountCharge - roundedDiscountAmount.floatValue();
+        float discountAmount = preDiscountCharge * ((float) discountPercent / 100);
+        BigDecimal bdRoundedDiscountAmount = new BigDecimal(Float.toString(discountAmount));
+        bdRoundedDiscountAmount = bdRoundedDiscountAmount.setScale(2, RoundingMode.HALF_UP);
+        roundedDiscountAmount = bdRoundedDiscountAmount.floatValue();
+        finalCharge = preDiscountCharge - roundedDiscountAmount;
     }
 
     @Override
@@ -139,10 +139,6 @@ public class RentalAgreement {
         return finalCharge;
     }
 
-    public float getDiscountAmount() {
-        return discountAmount;
-    }
-
     public float getPreDiscountCharge() {
         return preDiscountCharge;
     }
@@ -169,5 +165,9 @@ public class RentalAgreement {
 
     public Tool getTool() {
         return tool;
+    }
+
+    public float getRoundedDiscountAmount() {
+        return roundedDiscountAmount;
     }
 }
